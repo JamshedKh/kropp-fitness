@@ -71,12 +71,6 @@
    margin-left: 0;
  }
  
- :where(fieldset[class]) {
-   margin-left: 0;
-   padding: 0;
-   border: none;
- }
- 
  /**
    Убираем стандартный маркер маркированному списку,
    у которого есть атрибут class
@@ -85,38 +79,12 @@
    list-style: none;
  }
  
- :where(address[class]) {
-   font-style: normal;
- }
- 
- /**
-   Обнуляем вертикальные внешние отступы параграфа,
-   объявляем локальную переменную для внешнего отступа вниз,
-   чтобы избежать взаимодействие с более сложным селектором
-  */
- p {
-   --paragraphMarginBottom: 24px;
- 
-   margin-block: 0;
- }
- 
- /**
-   Внешний отступ вниз для параграфа без атрибута class,
-   который расположен не последним среди своих соседних элементов
-  */
- p:where(:not([class]):not(:last-child)) {
-   margin-bottom: var(--paragraphMarginBottom);
- }
- 
- 
  /**
    Упрощаем работу с изображениями и видео
   */
- img,
- video {
+ img {
    display: block;
    max-width: 100%;
-   height: auto;
  }
  
  /**
@@ -136,18 +104,9 @@
     */
    height: 100%;
    /**
-     Убираем скачок интерфейса по горизонтали
-     при появлении / исчезновении скроллбара
+     Плавный скролл
     */
-   scrollbar-gutter: stable;
- }
- 
- /**
-   Плавный скролл
-  */
- html,
- :has(:target) {
-   scroll-behavior: smooth;
+    scroll-behavior: smooth;
  }
  
  body {
@@ -163,73 +122,18 @@
  }
  
  /**
-   Нормализация высоты элемента ссылки при его инспектировании в DevTools
-  */
- a:where([class]) {
-   display: inline-flex;
- }
- 
- /**
-   Курсор-рука при наведении на элемент
-  */
- button,
- label {
-   cursor: pointer;
- }
- 
- /**
-   Приводим к единому цвету svg-элементы
-   (за исключением тех, у которых уже указан
-   атрибут fill со значением 'none' или начинается с 'url')
-  */
- :where([fill]:not(
-   [fill="none"],
-   [fill^="url"]
- )) {
-   fill: currentColor;
- }
- 
- /**
-   Приводим к единому цвету svg-элементы
-   (за исключением тех, у которых уже указан
-   атрибут stroke со значением 'none')
-  */
- :where([stroke]:not(
-   [stroke="none"],
-   [stroke^="url"]
- )) {
-   stroke: currentColor;
- }
- 
- /**
-   Чиним баг задержки смены цвета при взаимодействии с svg-элементами
-  */
- svg * {
-   transition-property: fill, stroke;
- }
- 
- /**
-   Приведение рамок таблиц в классический 'collapse' вид
-  */
- :where(table) {
-   border-collapse: collapse;
-   border-color: currentColor;
- }
- 
- /**
    Удаляем все анимации и переходы для людей,
    которые предпочитают их не использовать
   */
  @media (prefers-reduced-motion: reduce) {
-   *,
-   ::before,
-   ::after {
+   *{
      animation-duration: 0.01ms !important;
      animation-iteration-count: 1 !important;
      transition-duration: 0.01ms !important;
      scroll-behavior: auto !important;
    }
  }
+
 :root {
   --color-dark: #000000;
   --color-dark-alternate: #131619;
@@ -262,12 +166,19 @@ body {
   background-color: var(--color-dark);
 }
 
+/* svg * [fill]{fill: currentColor;}
+svg * [stroke]{stroke: currentColor;}  */
+
 a,
 button,
 input,
 textarea,
 svg * {
   transition-duration: var(--transition-duration);
+}
+
+svg * {
+  transition-property: fill, stroke;
 }
 
 a {
@@ -287,7 +198,7 @@ p:not([class]):not(:last-child) {
 }
 
 .container {
-  min-width: calc(var(--containet-width) + var(--container-padding-x)*2);
+  min-width: calc(var(--containet-width) + var(--container-padding-x) * 2);
   margin-inline: auto;
   padding-inline: var(--container-padding-x);
 }
@@ -335,10 +246,11 @@ h1, h2, h3, h4, h5, h6 {
   content: attr(data-title);
   position: absolute;
   z-index: -1;
-  top: -0.45em;
+  top: -0.3em;
   left: -0.6em;
   font-family: var(--font-family-accent);
   font-size: 2.8em;
+  line-height: 1;
   color: transparent;
   -webkit-text-stroke: 1px var(--color-light-gray);
   text-stroke: 1px var(--color-light-gray);
@@ -468,7 +380,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: flex-end; /* Исправлено с 'end' на 'flex-end' */
   min-height: calc(100vh - var(--header-height));
   padding: 36px 70px;
-  color: var(--color-light-gray);
+  color: var(--color-light);
   background-color: var(--color-dark-alternate);
 }
 
@@ -569,8 +481,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .training-types {
   position: relative;
-  min-width: 1920px;
-  margin-inline: auto;
   padding-top: 70px;
   padding-bottom: 120px;
   background-color: var(--color-dark);
@@ -599,7 +509,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .join-us-video-wrapper {
-  background: url('') center/cover no-repeat var(--color-dark-alternate);
+  background: url('./images/join-us-bg.jpg') center/cover no-repeat var(--color-dark-alternate);
 }
 
 @media (max-width: 1919px) {
