@@ -567,9 +567,50 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 37px;
 }
 
+.training-types {
+  position: relative;
+  min-width: 1920px;
+  margin-inline: auto;
+  padding-top: 70px;
+  padding-bottom: 120px;
+  background-color: var(--color-dark);
+}
+
+.training-types-list {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 60px;
+}
+
+.training-types-item {
+  --rtainingTypesItemBgIconSize: 80px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 32px;
+  padding-top: var(--rtainingTypesItemBgIconSize);
+  background: url('./icons/transparent-arrow-bottom-left.svg') 100% 0/var(--rtainingTypesItemBgIconSize) no-repeat;
+}
+
+.training-types-item-title {
+  font-size: 16px;
+
+}
+
+.join-us-video-wrapper {
+  background: url('') center/cover no-repeat var(--color-dark-alternate);
+}
+
 @media (max-width: 1919px) {
   .motivation-card-image {
     margin-block: -20px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .training-types-list {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -651,8 +692,22 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 60%;
   }
 
-  .motivation-card-description {
+  .motivation-card-description:not(:last-child) {
     margin-bottom: 20px;
   }
+  
+  .training-types-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
 
+  .training-types-item {
+    --trainingTypesItemBgIconSize: 50px;
+
+    row-gap: 10px;
+  }
+
+  .training-types-image {
+    min-width: 120px;
+  }
 }
